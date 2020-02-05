@@ -45,17 +45,15 @@ public class LegalEntityService {
     
 	public void updateLegalEntityByName(LegalEntityBean legalEntityBean, String entityname) {
 		
-		/*for(int i = 0; i < legalEntity.size() ; i++) {
+		for(int i = 0; i < legalEntity.size() ; i++) {
 			LegalEntityBean l = legalEntity.get(i);
 			if(l.getEntityName().equals(entityname)) {
 				legalEntity.set(i, legalEntityBean);
-			//else
 				return;
 			}
-		}*/
-		
-	legalEntity.stream().map(p ->  p.getEntityName().equals(entityname) ? legalEntityBean : p );
-		
+		}	
+	   
+		legalEntity.stream().map(p ->  p.getEntityName().equals(entityname) ? legalEntityBean : p );
 	};
 
 	// --Static method to convert String to Date type using Java 8 Date apis
@@ -66,6 +64,18 @@ public class LegalEntityService {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	public void deleteLegalEntityByName(String entityname) {
+		// TODO Auto-generated method stub
+		for(int i = 0; i < legalEntity.size() ; i++) {
+			LegalEntityBean l = legalEntity.get(i);
+			if(l.getEntityName().equals(entityname)) {
+				legalEntity.remove(i);
+				return;
+			}
+		}	
+		
 	}
 
 }
