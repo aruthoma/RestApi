@@ -40,8 +40,14 @@ public class LegalEntityController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/updatelegalentity/{entityname}")
-	public List<LegalEntityBean> updateLegalEntityByName(@RequestBody LegalEntityBean legalEntityBean, String entityname) {
+	public List<LegalEntityBean> updateLegalEntityByName(@RequestBody LegalEntityBean legalEntityBean,@PathVariable String entityname) {
 		legalEntityService.updateLegalEntityByName(legalEntityBean, entityname);;
+		return legalEntityService.getAllLegalEntity();
+	}
+	
+	@RequestMapping(method=RequestMethod.DELETE,value="/deletelegalentity/{entityname}")
+	public List<LegalEntityBean> deleteLegalEntityByName(@PathVariable String entityname) {
+		legalEntityService.deleteLegalEntityByName( entityname);;
 		return legalEntityService.getAllLegalEntity();
 	}
 	
