@@ -1,12 +1,15 @@
 package com.legalentity.app.model;
 
 
+import java.util.ArrayList;
+
 //*******************************************************************
 //   LegalEntityBean class
 ///* This Bean is to hold the data of Legal Entity Resource*/
 //*******************************************************************
 
 import java.util.Date;
+import java.util.List;
 
 
 public class LegalEntityBean {
@@ -15,6 +18,7 @@ public class LegalEntityBean {
 	private Date dateOfIncorp;
 	private String countryOfIncorp;
 	private int totalShares;
+	private List<LegalEntityShareHolderBean> legalEntityShareHolder;
 
 	public String getEntityName() {
 		return entityName;
@@ -47,24 +51,29 @@ public class LegalEntityBean {
 
 	public void setTotalShares(int totalShares) {
 		this.totalShares = totalShares;
+	}	
+
+	public List<LegalEntityShareHolderBean> getLegalEntityShareHolder() {
+		return legalEntityShareHolder;
 	}
 
-	public LegalEntityBean(String entityName, Date dateOfIncorp, String countryOfIncorp, int totalShares) {
+	public void setLegalEntityShareHolder(List<LegalEntityShareHolderBean> legalEntityShareHolder) {
+		this.legalEntityShareHolder = legalEntityShareHolder;
+	}
+
+	public LegalEntityBean(String entityName, Date dateOfIncorp, String countryOfIncorp, int totalShares,
+			List<LegalEntityShareHolderBean> legalEntityShareHolder) {
 		super();
 		this.entityName = entityName;
 		this.dateOfIncorp = dateOfIncorp;
 		this.countryOfIncorp = countryOfIncorp;
 		this.totalShares = totalShares;
+		this.legalEntityShareHolder = legalEntityShareHolder;
 	}
 
 	public LegalEntityBean() {
-
+		
 	}
 
-	@Override
-	public String toString() {
-		return "LegalEntityResourceBean [entityName=" + entityName + ", dateOfIncorp=" + dateOfIncorp
-				+ ", countryOfIncorp=" + countryOfIncorp + ", totalShares=" + totalShares + "]";
-	}
-
+	
 }
