@@ -8,6 +8,7 @@ package com.legalentity.app.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,23 +17,41 @@ import java.util.stream.IntStream;
 import org.springframework.stereotype.Service;
 
 import com.legalentity.app.model.LegalEntityBean;
+import com.legalentity.app.model.LegalEntityShareHolderBean;
 
 @Service
 public class LegalEntityService {
 
 	// Created an empty list object from legalEntityResourceBean to do add, update,
 	// get and delete operations
-	List<LegalEntityBean> legalEntityList = new ArrayList<LegalEntityBean>();;
+	List<LegalEntityBean> legalEntityList;
+	//List<LegalEntityShareHolderBean> legalEntityOneShareHolders;//List of Beans created 
+	//List<LegalEntityShareHolderBean> legalEntityTwoShareHolders;
+	//List<LegalEntityShareHolderBean> legalEntityThreeShareHolders;
 
 	/*
 	 * This Service method is creating new objects of LegalEntityBean and add in the
 	 * List of LegalEntityBean
 	 */
 	public List<LegalEntityBean> createLegalEntity() {
+		
+		LegalEntityShareHolderBean entity1SH1 = new LegalEntityShareHolderBean("Entity1ShareHolder1", "US",5);
+		LegalEntityShareHolderBean entity1SH2 = new LegalEntityShareHolderBean("Entity1ShareHolder2", "US",5);
+		//legalEntityOneShareHolders = new ArrayList<>(Arrays.asList(entity1SH1, entity1SH2));
+		
+		LegalEntityShareHolderBean entity2SH1 = new LegalEntityShareHolderBean("Entity2ShareHolder1", "UK",5);
+		LegalEntityShareHolderBean entity2SH2 = new LegalEntityShareHolderBean("Entity2ShareHolder1", "UK",5);
+		//legalEntityTwoShareHolders = new ArrayList<>(Arrays.asList(entity2SH1, entity2SH2));
+		
+		LegalEntityShareHolderBean entity3SH1 = new LegalEntityShareHolderBean("Entity3ShareHolder1", "CH",5);
+		LegalEntityShareHolderBean entity3SH2 = new LegalEntityShareHolderBean("Entity3ShareHolder1", "CH",5);
+		//legalEntityThreeShareHolders = new ArrayList<>(Arrays.asList(entity3SH1, entity3SH2));
+		
+		legalEntityList = new ArrayList<LegalEntityBean>();
 
-		legalEntityList.add(new LegalEntityBean("Entity1", parseDate("2020-12-01"), "US", 10));
-		legalEntityList.add(new LegalEntityBean("Entity2", parseDate("2020-11-01"), "UK", 20));
-		legalEntityList.add(new LegalEntityBean("Entity3", parseDate("2020-10-01"), "CH", 30));
+		legalEntityList.add(new LegalEntityBean("Entity1", parseDate("2020-12-01"), "US", 10,new ArrayList<>(Arrays.asList(entity1SH1, entity1SH2))));
+		legalEntityList.add(new LegalEntityBean("Entity2", parseDate("2020-11-01"), "UK", 20,new ArrayList<>(Arrays.asList(entity2SH1, entity2SH2))));
+		legalEntityList.add(new LegalEntityBean("Entity3", parseDate("2020-10-01"), "CH", 30,new ArrayList<>(Arrays.asList(entity3SH1, entity3SH2))));
 
 		return legalEntityList;
 	}
