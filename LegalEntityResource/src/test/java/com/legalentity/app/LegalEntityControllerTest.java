@@ -58,6 +58,7 @@ class LegalEntityControllerTest {
 	
 	
 	@Test
+	@Order(1)
 	//http://localhost:8081/createlegalentities/ URL to be called and just check the response
 	public void createAllLegalEntities() throws Exception {
 		 final String uri="/createlegalentities";//Create the Rest URL 
@@ -68,6 +69,7 @@ class LegalEntityControllerTest {
 	}
 
 	@Test
+	@Order(2)
 	/*http://localhost:8081/getAlllegalentities/  URL to be called and check if the first element's entity name is 
 	 * "Entity1" or not*/
 	public void getAllLegalEntities() throws Exception {
@@ -83,6 +85,7 @@ class LegalEntityControllerTest {
 	 * entityName as "Entity1" and pass a new object with the countryOfIncorp as JPN
 	 * and check the output is updated with the value contains JPN */
 	@Test
+	@Order(3)
 	public void updateEntity() throws Exception {
 		final String uri="/updatelegalentity/Entity1";
 		
@@ -107,6 +110,7 @@ class LegalEntityControllerTest {
 	/*Check the URL http://localhost:8081/addlegalentity/ and pass the object (Entity4) in POST request
 	 * and check if the response contains "Entity4" , which is added just now*/
 	@Test
+	@Order(4)
 	public void addEntity() throws Exception {
 		
 		//--setting the uri
@@ -131,6 +135,7 @@ class LegalEntityControllerTest {
 	 * and check if the value is still there in the list of objects*/
 	
 	@Test
+	@Order(5)
 	public void deleteEntity() throws Exception {
 		final String uri="/deletelegalentity/Entity1";
 		
@@ -141,13 +146,9 @@ class LegalEntityControllerTest {
 				.andExpect(content().contentType(JSON_TYPE))
                 .andExpect(jsonPath("$[0].entityName", is("Entity2")));
 		
-		MvcResult mvcResult = this.mockMvc.perform(delete(uri))
-				.andExpect(content().contentType(JSON_TYPE))
-				.andDo(print()).andReturn();
-		
-		String value = mvcResult.getResponse().getContentAsString();
-		Assert.assertThat(value, CoreMatchers.containsString("Entity2"));
 
+		
+		
 	}
 
 }
