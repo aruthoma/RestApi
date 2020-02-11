@@ -33,6 +33,7 @@ import com.legalentity.app.model.LegalEntityBean;
 import com.legalentity.app.model.LegalEntityShareHolderBean;
 
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.core.IsNot;
 import org.junit.Assert;
 import org.junit.jupiter.api.MethodOrderer;
 
@@ -91,17 +92,24 @@ class LegalEntityControllerTest {
 		final String uri = "/updatelegalentity/Entity1";
 
 		// create entities- pre test condition
-		this.mockMvc.perform(get("/createlegalentities"));
+		//this.mockMvc.perform(get("/createlegalentities"));
+		
+		final String uri_pre = "/getAlllegalentities";
+		
+		//Test if the first element is Entity1 
+				this.mockMvc.perform(get(uri_pre)).andExpect(status().isOk()).andExpect(content().contentType(JSON_TYPE))
+						.andExpect(jsonPath("$[0].entityName", is("Entity1")))
+						.andExpect(jsonPath("$[0].countryOfIncorp", is("US")));//Current Value is "US"
 
 		LegalEntityShareHolderBean entity1SH1 = new LegalEntityShareHolderBean("Entity1ShareHolder1", "US", 5);
 		LegalEntityShareHolderBean entity1SH2 = new LegalEntityShareHolderBean("Entity1ShareHolder2", "US", 5);
-		LegalEntityBean legalEntity = new LegalEntityBean("Entity1", new Date(), "JPN", 10,
+		LegalEntityBean legalEntity = new LegalEntityBean("Entity1", new Date(), "JPN", 10,//Update to JPN
 				new ArrayList<>(Arrays.asList(entity1SH1, entity1SH2)));
 
 		this.mockMvc.perform(put(uri).contentType(JSON_TYPE).content(convertObjectToJsonBytes(legalEntity)))
 				.andExpect(status().isOk()).andExpect(content().contentType(JSON_TYPE))
 				.andExpect(jsonPath("$[0].entityName", is("Entity1")))
-				.andExpect(jsonPath("$[0].countryOfIncorp", is("JPN")));
+				.andExpect(jsonPath("$[0].countryOfIncorp", is("JPN")));//New Value is JPN
 	}
 
 	/*
@@ -139,12 +147,20 @@ class LegalEntityControllerTest {
 	public void deleteEntity() throws Exception {
 		
 		final String uri = "/deletelegalentity/Entity1";
+		
+		final String uri_pre = "/getAlllegalentities";
+        
+		//Test if the first element is Entity1 
+		this.mockMvc.perform(get(uri_pre)).andExpect(status().isOk()).andExpect(content().contentType(JSON_TYPE))
+				.andExpect(jsonPath("$[0].entityName", is("Entity1")));
 
 		// create entities- pre test condition
-		this.mockMvc.perform(get("/createlegalentities"));
-
+		//this.mockMvc.perform(get("/createlegalentities"));
+		//Call the delete API and check if the first element is Entity2. Since the previous first elemtn Entity1 is deleted
 		this.mockMvc.perform(delete(uri)).andExpect(content().contentType(JSON_TYPE))
 				.andExpect(jsonPath("$[0].entityName", is("Entity2")));
+				
+		
 	}
 
 }
