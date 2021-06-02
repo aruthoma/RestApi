@@ -18,3 +18,13 @@ This application has the below URLs (usage of this Rest API)
    We should pass the `entityname` which needs to be updated and in the request body, we should pass the JSON value , which will replace the existing value for the `Entity Name`.
 6. http://localhost:8081/deletelegalentity/{entityname} URL will delete a specific object from the bean object and return the bean object.
    So that we can verify if the value is deleted or not. This is a DELETE request.
+   
+     @Query("select pe.packageName from  PackageEntity pe where " +
+            "lower(pe.packageName) like  " +
+            "case when :packageName is null then lower(pe.packageName) else concat('%',lower(:packageName),'%') end " )
+    List<String> getValues( @Param("packageName") String roomIDList);
+   
+   Error
+   org.postgresql.util.PSQLException: ERROR: function lower(bytea) does not exist
+  Hint: No function matches the given name and argument types. You might need to add explicit type casts.
+  Position: 190
